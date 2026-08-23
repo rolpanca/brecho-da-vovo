@@ -596,7 +596,7 @@ footer p {
     box-shadow: 0 5px 20px rgba(0,0,0,0.8);    
 }
 .pagamentos h2 {
-    font-family: 30px;
+    font-size: 30px;
     margin-bottom: 30px;
     color: #222;
 
@@ -1224,7 +1224,7 @@ CHECKOUT
     gap: 20px;
 
     padding: 15px;
-    border-radius: 1px solid #ddd;
+    border: 1px solid #ddd;
 }
 .item-checkout img {
     width: 70px;
@@ -1257,7 +1257,7 @@ CHECKOUT
     padding: 20px;
 }
 .caixa-confirmacao {
-    max-width: 700pxpx;
+    max-width: 700px;
     width: 100%;
     margin: 50px auto;
     background: white;

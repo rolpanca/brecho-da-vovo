@@ -45,9 +45,9 @@ pesquisa.addEventListener('keyup', function(){
         const nomeProduto = produto.querySelector('h2').textContent.toLowerCase();
 
 
-        console.log(nomeProduto, textoPesquisa);      
+        console.log(nomeProduto, termoPesquisaPesquisa);      
 
-        if (nomeProduto.includes(textoPesquisa)) {
+        if (nomeProduto.includes(termoPesquisaPesquisa)) {
 
             console.log("Mostrar:", nomeProduto);
 
@@ -70,28 +70,28 @@ botoesComprar.forEach(function(botaoComprar){
 
        
         event.preventDefault();     
-        
-        console.log("1")
 
-        const produto = botaoComprar.closest('.produto');    
-        
-        console.log("2")
+        if (!verificarLogin()) {
+            alert('Você precisa estar logado para adicionar produtos ao carrinho');
+            window.location.href = 'login.html';
+            return;
+        }
 
+        
+     
+
+        const produto = botaoComprar.closest('.produto');        
+      
         const nome = produto.querySelector('h2').textContent;
-
-        console.log("3")
-
+       
         const preco = produto.querySelector('.preco').textContent;
-
-        console.log("4")
+        
 
         const imagem = produto.querySelector('img').src;
-
-        console.log("5")
+      
 
         const valor = Number(preco.replace('R$', '').replace(',', '.'));
-
-        console.log("6")
+       
 
         const produtoExistente = carrinho.find(function(item) {
             return item.nome === nome;
@@ -100,6 +100,7 @@ botoesComprar.forEach(function(botaoComprar){
               
         if (produtoExistente) {
             produtoExistente.quantidade++;
+
         } else {
             carrinho.push({
                 nome: nome,
@@ -109,26 +110,20 @@ botoesComprar.forEach(function(botaoComprar){
             });
         };
 
-        console.log("6")
+      salvarCarrinho();
 
-        try {
-            atualizarCarrinho();   
-            console.log("7")      
-            salvarCarrinho();  
-            }catch (erro) {
-                console.erro("ERRO EM atualizarCarrinho:",erro);
-            }
-        try {
-            salvarCarrinho();
-            console.log("8") 
-        } catch (erro)  {
-            console.logo("ERRO EM salvarCarrinho:",erro);
-        } 
-             
-                               
+      atualizarCarrinho();
+
+      console.log('produto adicionado:', nome);
+      console.log('Carrinho:', carrinho);
+
+      alert('Produto adicionado ao carrinho');
+
     });
-    
+
 });
+
+       
 
 //=============================================================================================
 //MODAL DOS PRODUTOS

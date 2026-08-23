@@ -104,12 +104,29 @@ function atualizarCheckout(){
     totalCheckout.textContent = 'Total: R$ ' + total.toFixed(2).replace('.', ',');
 };
 
-const carrinhoSalvo = localStorage.getItem('carrinho');
+function obterChaveCarrrinho() {
+    const usuarioLogado = JSON.parse(
+        localStorage.getItem('usuarioLogado')
+    );
+    if (!usuarioLogado) {
+        return 'carrinho';
+    }
 
-    if(carrinhoSalvo) {
-        carrinho = JSON.parse(carrinhoSalvo);
-    };
-    atualizarCheckout();
+    return 'carrinho_' + usuarioLogado.email;
+}
+
+const chaveCarrinho = obterChaveCarrrinho();
+const carrinhoSalvo = localStorage.getItem(chaveCarrinho);
+
+if (carrinhoSalvo) {
+    carrinho = JSON.parse(carrinhoSalvo);
+}else {
+    carrinho = [];
+}
+
+atualizarCheckout();
+
+
 
     btnFinalizar.addEventListener('click', function() {
         
@@ -145,7 +162,9 @@ const carrinhoSalvo = localStorage.getItem('carrinho');
         btnFinalizar.disabled = true;
         btnFinalizar.textContent = 'Processando...';
 
-        localStorage.removeItem('carrinho');
+        const chaveCarrinho = obterChaveCarrrinho();
+
+        localStorage.removeItem('chaveCarrinho');
 
         carrinho = [];
 

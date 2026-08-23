@@ -16,7 +16,7 @@ formulario.addEventListener('submit', function(event) {
     mensagemLogin.textContent = '';
     mensagemLogin.classList.remove('sucesso');
 
-    const valorEmail = email.value;
+    const valorEmail = email.value.trim();
     const valorSenha = senha.value;
    
 
@@ -32,27 +32,33 @@ formulario.addEventListener('submit', function(event) {
     }
 
 
-    const dadosUsuario = localStorage.getItem('usuario');
+    const dadosUsuarios = localStorage.getItem('usuarios');
 
-    if (!dadosUsuario) {
+    if (!dadosUsuarios) {
         mensagemLogin.textContent = 'Nenhuma conta cadastrada.';
         return;
     }
 
-    const usuario = JSON.parse(dadosUsuario);
+    const usuarios = JSON.parse(dadosUsuarios);
 
+    const usuarioEncontrado = usuarios.find(function(usuario) {
+        return usuario.email === valorEmail && usuario.senha === valorSenha;
+    });
 
-     if (valorEmail === usuario.email && valorSenha === usuario.senha) {
+    if (usuarioEncontrado) {
 
-        const usuarioLogado = {
-            nome: usuario.nome,
-            email: usuario.email
+         const usuarioLogado = {
+            nome: usuarioEncontrado.nome,
+            email: usuarioEncontrado.email
         };
 
-        localStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado));
+         localStorage.setItem(
+            'usuarioLogado',
+             JSON.stringify(usuarioLogado)
+        );
 
-        mensagemLogin.classList.add('sucesso');
-        mensagemLogin.textContent = 'Login realizado com sucesso!';
+         mensagemLogin.classList.add('sucesso');
+         mensagemLogin.textContent = 'Login realizado com sucesso!';                            
 
         setTimeout(function() {
             window.location.href = 'index.html';

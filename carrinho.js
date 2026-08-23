@@ -7,14 +7,44 @@ const totalCarrinho = document.getElementById('total-carrinho-pagina');
 let carrinho = [];
 let total = 0;
 
-const carrinhoSalvo = localStorage.getItem('carrinho');
+function obterChaveCarrinho() {
+    const usuarioLogado = JSON.parse(
+        localStorage.getItem('usuarioLogado')
+    );
+
+    if(!usuarioLogado) {
+        return 'carrinho';
+    }
+    return 'carrinho_' + usuarioLogado.email;
+};
+
+
+function salvarCarrinho() {
+    const ChaveCarrinho = obterChaveCarrinho();
+
+    localStorage.setItem(ChaveCarrinho,JSON.stringify(carrinho)
+);
+
+console.log('Carrinho salvo:', ChaveCarrinho);
+
+}
+
+function carregarCarrinho () {
+    const ChaveCarrinho = obterChaveCarrinho();
+    const carrinhoSalvo = localStorage.getItem(ChaveCarrinho);
+
+    console.log('Dados encontrados:', carrinhoSalvo);
 
     if (carrinhoSalvo) {
-
         carrinho = JSON.parse(carrinhoSalvo);
-    };
+    }else {
+        carrinho = [];
+    }
+}
 
-   
+
+//const carrinhoSalvo = localStorage.getItem(ChaveCarrinho);
+      
 
     function atualizarCarrinho() {
         total = 0;
@@ -89,9 +119,7 @@ const carrinhoSalvo = localStorage.getItem('carrinho');
                      
                   
                 </div>     
-            `;
-
-          
+            `;          
 
 
             const botaoMais = item.querySelector('.btn-mais');
@@ -100,9 +128,10 @@ const carrinhoSalvo = localStorage.getItem('carrinho');
             botaoMais.addEventListener('click', function() {
                 produto.quantidade++;
 
-                localStorage.setItem('carrinho', JSON.stringify(carrinho));
+                salvarCarrinho();
 
                 atualizarCarrinho();
+
             });
             
             botaoMenos.addEventListener('click', function() {
@@ -114,13 +143,14 @@ const carrinhoSalvo = localStorage.getItem('carrinho');
                     carrinho.splice(indice, 1);
                 }
 
-                localStorage.setItem('carrinho', JSON.stringify(carrinho) );
-
+                salvarCarrinho();
                 atualizarCarrinho();
             });
 
             const botaoRemover = document.createElement('button');
+
             botaoRemover.textContent = 'Remover';
+
             botaoRemover.classList.add('btn-remover');
 
 
@@ -134,8 +164,7 @@ const carrinhoSalvo = localStorage.getItem('carrinho');
                 const indice = carrinho.indexOf(produto);
                 carrinho.splice(indice, 1);
 
-                localStorage.setItem('carrinho', JSON.stringify(carrinho));
-
+                salvarCarrinho();
                 atualizarCarrinho();
 
             });
@@ -157,4 +186,5 @@ const carrinhoSalvo = localStorage.getItem('carrinho');
         totalCarrinho.textContent = ' R$ ' + total.toFixed(2).replace('.', ',');
 
     };
+    carregarCarrinho();
     atualizarCarrinho();

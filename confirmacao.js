@@ -1,9 +1,10 @@
 const numeroPedido = localStorage.getItem('numeroPedido');
 const campNumero = document.getElementById('numero-pedido');
 
-campNumero.textContent = '#' + numeroPedido;
+//campNumero.textContent = '#' + numeroPedido;
 
 if (numeroPedido) {
+    
     campNumero.textContent = '#' + numeroPedido;
 
 }else {
