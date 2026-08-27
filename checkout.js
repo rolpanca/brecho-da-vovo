@@ -247,9 +247,7 @@ localStorage.setItem(
 
 
 
-localStorage.setItem('pedidoAtual', JSON.stringify(pedido));
-
-
+// localStorage.setItem('pedidoAtual', JSON.stringify(pedido));
 
 
 // localStorage.setItem('totalPedido', totalPedido);
