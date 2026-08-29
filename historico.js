@@ -6,43 +6,102 @@ if (!usuarioLogado) {
     listaPedidos.innerHTML = '<p>Nenhum usuário está logado.</p>';
 
 } else {
+
     const chavePedidos = 'pedidos_' + usuarioLogado.email;
 
-    const pedidosSalvos = localStorage.getItem(chavePedidos);
+    const pedidos = JSON.parse(localStorage.getItem(chavePedidos)
+) || [];
 
-    if (!pedidosSalvos) {
-        listaPedidos.innerHTML = '<p>Você ainda não fez nenhum pedido.</p>';
+if (pedidos.length === 0) {
 
-    } else {
-        const pedidos = JSON.parse(pedidosSalvos);
+    listaPedidos.innerHTML = '<p>Você ainda não possui pedidos.</p>';
 
-        pedidos.forEach(function(pedido){
+} else {
 
-            const itemPedido = document.createElement('div');
+    pedidos.forEach(function(pedido) {
 
-            itemPedido.classList.add('pedido-historico');
+        const item = document.createElement('div');
 
-            const totalFormatado = Number(pedido.total)
-                .toFixed(2)
-                .replace('.', ',');
+        item.classList.add('pedido');
 
-             itemPedido.innerHTML = `
+        let produtosHTML = '';
 
-             <h3>Pedido #${pedido.numero}</h3>
-             
+        if (pedido.produtos && pedido.produtos.length > 0) {
+
+            pedido.produtos.forEach(function(produto) {
+
+                const quantidade = produto.quantidade || 1;
+
+                const preco = Number(produto.preco || 0);
+
+                produtosHTML += `
+
+                <div class="produto-pedido">
+
+                    <p>
+                        <strong>${produto.nome}</strong>
+                        <br>
+                        Quantidade: ${quantidade}
+                        <br>
+                        Preço: R$ ${preco.toFixed(2).replace('.', ',')}
+                    </p>        
+
+                </div>                  
+                
+                `;
+            });
+
+        } else {
+
+            produtosHTML = '<p>Nenhum produto encontrado neste pedido.</p>'
+        }
+
+        let dataPedido = 'Data não informada';
+
+        if (pedido.data) {
+            const data = new Date(pedido.data);
+
+            dataPedido = data.toLocaleString('pt-BR');
+        }
+
+        const total = Number(pedido.total || 0);
+
+        item.innerHTML = `
+
+            <h3>Pedido #${pedido.numero}</h3>
+
             <p>
-                Total: R$ ${totalFormatado}
+                <strong>📅 Data e hora:</strong>
+                ${dataPedido}
+            </p> 
+
+            <h4>Produtos:</h4>
+
+            <div class="produtos-pedido">
+                ${produtosHTML}
+            </div>
+
+            <p>
+                <strong>💳 Pagamento:</strong>
+                ${pedido.pagamento}
+            </p>
+
+            <p>
+                <strong>💰 Total:</strong>
+                R$ ${total.toFixed(2).replace('.', ',')}
             </p>   
-            
-            <p>
-                pagamento: ${pedido-pagamento}
-            </p>    
 
-            `;
-            
-            listaPedidos.appendChild(itemPedido);
+        `;
 
-        });
-            
-    }
+        listaPedidos.appendChild(item);
+
+    });
+    
 }
+
+}
+
+
+
+
+

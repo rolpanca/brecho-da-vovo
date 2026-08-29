@@ -202,6 +202,8 @@ const pedido = {
 
     numero:numeroPedido,
 
+    data: new Date().toISOString(),
+
     cliente: {
         nome: nome.value,
         email: email.value,
@@ -217,7 +219,7 @@ const pedido = {
         estado: estado.value
     },
 
-    produto: carrinho,
+    produtos: carrinho,
     total: totalPedido,
     pagamento: formaPagamento
 };
