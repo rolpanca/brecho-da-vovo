@@ -24,11 +24,14 @@ if (pedidos.length === 0) {
 
         item.classList.add('pedido');
 
+
+
         let produtosHTML = '';
 
-        if (pedido.produtos && pedido.produtos.length > 0) {
 
-            pedido.produtos.forEach(function(produto) {
+        if (pedido.produto && pedido.produto.length > 0) {
+
+            pedido.produto.forEach(function(produto) {
 
                 const quantidade = produto.quantidade || 1;
 
@@ -40,9 +43,13 @@ if (pedidos.length === 0) {
 
                     <p>
                         <strong>${produto.nome}</strong>
+
                         <br>
+
                         Quantidade: ${quantidade}
+
                         <br>
+
                         Preço: R$ ${preco.toFixed(2).replace('.', ',')}
                     </p>        
 
@@ -53,13 +60,14 @@ if (pedidos.length === 0) {
 
         } else {
 
-            produtosHTML = '<p>Nenhum produto encontrado neste pedido.</p>'
-        }
+            produtosHTML = '<p>Nenhum produto encontrado neste pedido.</p>';
+        }    
+        
 
         let dataPedido = 'Data não informada';
 
         if (pedido.data) {
-            const data = new Date(pedido.data);
+           const data = new Date(pedido.data);
 
             dataPedido = data.toLocaleString('pt-BR');
         }
@@ -89,17 +97,39 @@ if (pedidos.length === 0) {
             <p>
                 <strong>💰 Total:</strong>
                 R$ ${total.toFixed(2).replace('.', ',')}
-            </p>   
-
+            </p>             
         `;
+
+        const botaoDetalhes = document.createElement('button');        
+
+        botaoDetalhes.classList.add(
+            'btn-detalhes-pedido'
+          );   
+
+          botaoDetalhes.textContent = 'Ver detalhes'; 
+
+        botaoDetalhes.addEventListener('click', function() {
+            alert(
+                'pedido #' + pedido.numero + '\n\n' +
+                'Cliente: ' + pedido.cliente.nome + '\n' +
+                'E-mail: ' + pedido.cliente.email + '\n' +
+                'Telefone: ' + pedido.cliente.telefone
+            );
+                
+
+        });
+
+        item.appendChild(botaoDetalhes);
 
         listaPedidos.appendChild(item);
 
-    });
-    
-}
+        });
 
-}
+    }    
+    
+
+
+
 
 
 
