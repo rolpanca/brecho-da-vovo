@@ -1453,7 +1453,29 @@ CHECKOUT
     text-decoration: underline;
 }
 
-/*=======================================*/
+/*BOTÃO FECHAR DO MODAL DE PEDIDO*/
+
+.fechar-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    border: none;
+    background: transparent;
+    font-size: 32px;
+    font-weight: bold;
+    color: #444;
+    cursor: pointer;
+}
+.fechar-modal:hover {
+    color: red;
+    transform: scale(1.1);
+} 
+
+#conteudo-detalhes {
+    text-align: left;
+    line-height: 1.6;
+    white-space: pre-line;
+}
 
 
 
@@ -1482,9 +1504,12 @@ CHECKOUT
     }
 
     .menu {
-        flex-direction: column;
-        gap: 15px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;        
         align-items: center;
+        gap: 12px;
     }
 
 
@@ -1566,10 +1591,8 @@ CHECKOUT
     grid-template-columns: 1fr;
    }
 
-  .menu {
-    flex-direction: column;
-    align-items: center;
-  }
+  
+  
 
   .pesquisar {
     display: flex;
@@ -1925,19 +1948,6 @@ HISTÓRICO DE PEDIDOS
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 @media (max-width: 600px) {
 
     .modal-conteudo {
@@ -1972,9 +1982,6 @@ HISTÓRICO DE PEDIDOS
         right: 15px;
     }
 }
-
-
-
 
 
  @keyframes aparecer {

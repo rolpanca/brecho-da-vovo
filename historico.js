@@ -1,5 +1,9 @@
 const listaPedidos = document.getElementById('lista-pedidos');
 
+const modalDetalhes = document.getElementById('modal-detalhes')
+const conteudoDetalhes = document.getElementById('conteudo-detalhes');
+const fecharModal = document.getElementById('fechar-modal');
+
 const usuarioLogado = JSON.parse(
     localStorage.getItem('usuarioLogado')
 );
@@ -182,7 +186,8 @@ if (!usuarioLogado) {
                     detalhes += 'Nenhum produto encontrado.';
                 }
 
-                alert(detalhes);
+                conteudoDetalhes.textContent = detalhes;
+                modalDetalhes.style.display = 'flex';
 
             }
 
